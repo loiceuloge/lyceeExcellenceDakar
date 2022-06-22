@@ -1,0 +1,37 @@
+<h2>Classe repertory</h2>
+<div class="form">
+  <div class="form-group">
+    <input type="text" [(ngModel)]="classeName" />
+  </div>
+  <div class="form-group">
+    <button (click)="id ? editClasse() : addClasse()" class="btn">
+      {{ id ? "Update classe" : "Add classe" }}
+    </button>
+  </div>
+</div>
+
+<div class="classs-list">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th colspan="2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let classe of classes">
+        <th>{{ classe.name }}</th>
+        <td>
+          <button (click)="updateInput(classe.id)" class="btn-edit">
+            Edit
+          </button>
+        </td>
+        <td>
+          <button (click)="deleteClasse(classe.id)" class="btn-delete">
+            Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,62 @@
+<div class="join-container">
+  <h2>Join student to a classe</h2>
+  <div class="header">
+    <select name="" id="" #studentId>
+      <ng-container *ngFor="let student of students">
+        <ng-container *ngIf="student.currentClasse === null">
+          <option value="{{ student.id }}">
+            {{ student.name }}
+          </option>
+        </ng-container>
+      </ng-container>
+    </select>
+
+    <select name="" id="" #classeId>
+      <option *ngFor="let classe of classes" value="{{ classe.name }}">
+        {{ classe.name }}
+      </option>
+    </select>
+
+    <button (click)="join(studentId.value, classeId.value)" class="btn">
+      Join
+    </button>
+  </div>
+
+  <div class="btn-container">
+    <button
+      [ngStyle]="{
+        backgroundColor: className === classe.name ? 'blue' : 'green'
+      }"
+      (click)="filter(classe.name)"
+      *ngFor="let classe of classes"
+      class="filter-btn"
+    >
+      {{ classe.name }}
+    </button>
+  </div>
+
+  <table *ngIf="classroomStudient.length !== 0; else NoStudent">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of classroomStudient">
+        <th>{{ student.name }}</th>
+        <td>
+          <button (click)="remove(student.id)" class="btn-remove">
+            remove
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #NoStudent>
+    <p style="font-style: italic">
+      no student in this class yet
+      <span *ngIf="className"> in {{ className }} </span>
+    </p>
+  </ng-template>
+</div>

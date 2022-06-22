@@ -1,0 +1,96 @@
+.join-container {
+  /* background-color: red; */
+  width: 60%;
+  margin: 0 auto;
+}
+h2 {
+  text-align: center;
+}
+
+.btn {
+  /* display: inline-block; */
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: green;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) auto;
+}
+
+select {
+  width: 100%;
+  border: 2px solid #bbb;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 16px;
+  background-color: #fff;
+  color: #444;
+}
+
+.btn-container {
+  width: 80%;
+  margin: 32px auto;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.filter-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: green;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn-remove {
+  display: inline-block;
+  font-size: 14px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  background-color: green;
+}
+
+.btn-delete {
+  background-color: red;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #444;
+}
+thead tr {
+  background-color: #333;
+  color: #fff;
+}
+
+thead th {
+  width: 50%;
+}
+
+th,
+td {
+  padding: 8px 16px;
+  text-align: left;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #bbb;
+}
+
+tbody tr:nth-child(even) {
+  background-color: rgb(198, 240, 114);
+}
