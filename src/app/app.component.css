@@ -1,4 +1,4 @@
-.container {
+/* .container {
   width: 90vw;
   margin: 100px auto;
 
@@ -6,4 +6,19 @@
   grid-template-columns: 2fr 1fr;
   align-items: center;
   gap: 92px;
+} */
+
+a:link,
+a:visited {
+  color: #333;
+}
+
+.active {
+  background-color: green;
+  color: #fff;
+}
+
+.active a:link,
+.active a:visited {
+  color: #fff !important;
 }

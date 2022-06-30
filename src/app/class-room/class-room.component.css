@@ -1,10 +1,11 @@
 .join-container {
   /* background-color: red; */
   width: 60%;
-  margin: 0 auto;
+  margin: 50px auto;
 }
 h2 {
   text-align: center;
+  margin-bottom: 48px;
 }
 
 .btn {

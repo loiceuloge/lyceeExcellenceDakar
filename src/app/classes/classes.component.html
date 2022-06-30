@@ -22,12 +22,12 @@
       <tr *ngFor="let classe of classes">
         <th>{{ classe.name }}</th>
         <td>
-          <button (click)="updateInput(classe.id)" class="btn-edit">
+          <button (click)="updateInput(classe._id)" class="btn-edit">
             Edit
           </button>
         </td>
         <td>
-          <button (click)="deleteClasse(classe.id)" class="btn-delete">
+          <button (click)="deleteClasse(classe._id)" class="btn-delete">
             Supprimer
           </button>
         </td>

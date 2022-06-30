@@ -3,8 +3,8 @@
   <div class="header">
     <select name="" id="" #studentId>
       <ng-container *ngFor="let student of students">
-        <ng-container *ngIf="student.currentClasse === null">
-          <option value="{{ student.id }}">
+        <ng-container *ngIf="student.currentClasse === 'null'">
+          <option value="{{ student._id }}">
             {{ student.name }}
           </option>
         </ng-container>
@@ -46,7 +46,7 @@
       <tr *ngFor="let student of classroomStudient">
         <th>{{ student.name }}</th>
         <td>
-          <button (click)="remove(student.id)" class="btn-remove">
+          <button (click)="remove(student._id)" class="btn-remove">
             remove
           </button>
         </td>
@@ -55,8 +55,10 @@
   </table>
   <ng-template #NoStudent>
     <p style="font-style: italic">
-      no student in this class yet
-      <span *ngIf="className"> in {{ className }} </span>
+      no classe selected
+      <span *ngIf="className">
+        {{ "no student in this class yet in " + className }}
+      </span>
     </p>
   </ng-template>
 </div>

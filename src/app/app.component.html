@@ -2,8 +2,24 @@
   Lycée de l'Excellence de Dakar
 </h1>
 <div class="container">
-  <app-students></app-students>
-  <app-classes></app-classes>
+  <div class="row">
+    <ul class="nav nav-tabs">
+      <li
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-item"
+      >
+        <a class="nav-link" routerLink="/">Students</a>
+      </li>
+      <li routerLinkActive="active" class="nav-item">
+        <a class="nav-link" routerLink="/classes">Classes</a>
+      </li>
+      <li routerLinkActive="active" class="nav-item">
+        <a class="nav-link" routerLink="/classrooms">Classrooms</a>
+      </li>
+    </ul>
+  </div>
+  <div class="row">
+    <router-outlet></router-outlet>
+  </div>
 </div>
-
-<app-class-room></app-class-room>

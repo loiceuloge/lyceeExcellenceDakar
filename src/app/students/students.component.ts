@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Observable } from 'rxjs';
 import { StudentModel } from '../shared/student.model';
 import { StudientService } from './studient-service.service';
 
@@ -8,36 +9,59 @@ import { StudientService } from './studient-service.service';
   styleUrls: ['./students.component.css'],
 })
 export class StudentsComponent implements OnInit {
-  studentName: any = '';
+  studentName: string = '';
   students: StudentModel[] = [];
   id: number = 0;
 
   constructor(private studientService: StudientService) {}
 
   ngOnInit(): void {
-    this.students = this.studientService.getStudients();
-    console.log(this.students);
+    this.studientService.getStudients().subscribe((data) => {
+      this.students = data;
+      // console.log(this.students);
+    });
+  }
+
+  getStudient() {
+    this.studientService.getStudients().subscribe((data) => {
+      this.students = data;
+    });
   }
 
   addStudient() {
-    this.studientService.addStudient(this.studentName);
+    this.studientService.addStudient(this.studentName).subscribe((data) => {
+      console.log(data);
+      this.getStudient();
+    });
+
+    this.getStudient();
     this.studentName = '';
   }
 
   deleteStudent(id: number) {
-    this.studientService.removeStudent(id);
+    console.log(id);
+    this.studientService.removeStudent(id).subscribe((data) => {
+      this.getStudient();
+    });
   }
 
   updateInput(id: number) {
     this.id = id;
-    const student = this.studientService.getStudient(id);
-    this.studentName = student?.name;
-    console.log(student);
+    this.studientService.getStudient(id).subscribe((data) => {
+      const student = data;
+      this.studentName = student?.name;
+      console.log(student);
+    });
   }
 
   editStudient() {
-    this.studientService.updateStudent(this.id, this.studentName);
-    this.studentName = '';
-    this.id = 0;
+    this.studientService
+      .updateStudent(this.id, this.studentName)
+      .subscribe((data) => {
+        console.log(data);
+        this.getStudient();
+        this.studentName = '';
+        this.id = 0;
+      });
   }
 }

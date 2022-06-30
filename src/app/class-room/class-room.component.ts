@@ -21,41 +21,63 @@ export class ClassRoomComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.students = this.studentService.getStudients();
-    console.log(this.students);
-    this.classes = this.classeService.getClasses();
+    // this.studentService.getStudients().subscribe((data) => {
+    //   this.students = data;
+    //   console.log(this.students);
+    // });
+
+    // console.log(this.students);
+    // this.classeService.getClasses().subscribe((data) => {
+    //   this.classes = data;
+    //   console.log(this.classes);
+    // });
+
+    this.getStudientInit();
+    this.getClassesInit();
   }
 
-  join(studentID: string, className: string) {
-    this.studentService.attachClasse(+studentID, className);
-    const students = this.studentService.getStudients();
-    console.log(students);
+  getStudientInit() {
+    this.studentService.getStudients().subscribe((data) => {
+      this.students = data;
+    });
+  }
 
-    this.filter(this.className);
+  getClassesInit() {
+    this.classeService.getClasses().subscribe((data) => {
+      this.classes = data;
+    });
   }
 
   filter(classeName: string) {
     console.log(classeName);
-    this.classroomStudient = this.studentService
-      .getStudients()
-      .filter((student) => {
+    this.studentService.getStudients().subscribe((students) => {
+      this.classroomStudient = students.filter((student: StudentModel) => {
+        this.className = classeName;
         return student.currentClasse === classeName;
       });
-
-    this.className = classeName;
+    });
 
     console.log(this.classroomStudient);
   }
 
-  remove(id: number) {
-    this.studentService.detachClasse(id);
-    const studientIndex = this.classroomStudient.findIndex(
-      (studient) => studient.id === id
-    );
-    console.log(studientIndex);
+  join(studentID: string, className: string) {
+    console.log(className, studentID);
+    this.studentService.attachClasse(studentID, className).subscribe((data) => {
+      console.log('join succed');
+      this.studentService.getStudients().subscribe((data) => {
+        this.students = data.filter((student) => {
+          return student.currentClasse === 'null';
+        });
+        this.filter(this.className);
+        console.log(this.students);
+      });
+    });
+  }
 
-    if (studientIndex !== -1) {
-      this.classroomStudient.splice(studientIndex, 1);
-    }
+  remove(id: number) {
+    this.studentService.detachClasse(id).subscribe((data) => {
+      this.getStudientInit();
+      this.filter(this.className);
+    });
   }
 }

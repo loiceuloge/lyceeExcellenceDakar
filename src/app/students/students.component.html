@@ -7,12 +7,6 @@
     <button (click)="id ? editStudient() : addStudient()" class="btn">
       {{ id ? "Update Student" : "Add Student" }}
     </button>
-    <!-- <button *ngIf="!studentName" (click)="addStudient()" class="btn">
-      Save
-    </button> -->
-    <!-- <button *ngIf="studentName" (click)="editStudient()" class="btn">
-      Update
-    </button> -->
   </div>
 </div>
 
@@ -28,12 +22,12 @@
       <tr *ngFor="let student of students">
         <th>{{ student.name }}</th>
         <td>
-          <button (click)="updateInput(student.id)" class="btn-edit">
+          <button (click)="updateInput(student._id)" class="btn-edit">
             Edit
           </button>
         </td>
         <td>
-          <button (click)="deleteStudent(student.id)" class="btn-delete">
+          <button (click)="deleteStudent(student._id)" class="btn-delete">
             Supprimer
           </button>
         </td>

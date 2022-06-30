@@ -8,36 +8,59 @@ import { ClasseService } from './classe.service';
   styleUrls: ['./classes.component.css'],
 })
 export class ClassesComponent implements OnInit {
-  classeName: any = '';
+  classeName: string = '';
   classes: ClasseModel[] = [];
   id: number = 0;
 
   constructor(private classeService: ClasseService) {}
 
   ngOnInit(): void {
-    this.classes = this.classeService.getClasses();
-    console.log(this.classes);
+    this.classeService.getClasses().subscribe((data) => {
+      this.classes = data;
+      console.log(this.classes);
+    });
+  }
+
+  getClassesInit() {
+    this.classeService.getClasses().subscribe((data) => {
+      this.classes = data;
+    });
   }
 
   addClasse() {
-    this.classeService.addClasse(this.classeName);
+    this.classeService.addClasse(this.classeName).subscribe((data) => {
+      console.log(data);
+      this.getClassesInit();
+    });
+
+    this.getClassesInit();
     this.classeName = '';
   }
 
   deleteClasse(id: number) {
-    this.classeService.removeClasse(id);
+    console.log(id);
+    this.classeService.removeClasse(id).subscribe((data) => {
+      this.getClassesInit();
+    });
   }
 
   updateInput(id: number) {
     this.id = id;
-    const student = this.classeService.getClasse(id);
-    this.classeName = student?.name;
-    console.log(student);
+    this.classeService.getClasse(id).subscribe((data) => {
+      const classe = data;
+      this.classeName = classe?.name;
+      console.log(classe);
+    });
   }
 
   editClasse() {
-    this.classeService.updateClasse(this.id, this.classeName);
-    this.classeName = '';
-    this.id = 0;
+    this.classeService
+      .updateClasse(this.id, this.classeName)
+      .subscribe((data) => {
+        console.log(data);
+        this.getClassesInit();
+        this.classeName = '';
+        this.id = 0;
+      });
   }
 }

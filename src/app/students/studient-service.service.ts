@@ -1,121 +1,65 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { StudentModel } from '../shared/student.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+  }),
+};
 @Injectable({
   providedIn: 'root',
 })
 export class StudientService {
-  students: StudentModel[] = [
-    {
-      id: 1,
-      name: 'Loic Euloge',
-      currentClasse: null,
-    },
-    {
-      id: 2,
-      name: 'Student 2',
-      currentClasse: null,
-    },
-    {
-      id: 3,
-      name: 'Student 3',
-      currentClasse: null,
-    },
-  ];
+  private studentUrl = 'http://localhost:3000/students';
 
-  getStudients() {
-    return this.students;
-  }
+  constructor(private http: HttpClient) {}
 
-  // getStudientsByClasseName(classeName: string) {
-  //   const tempStudents = this.students.filter((students) => {
-  //     return (students.currentClasse = classeName);
-  //   });
-  //   console.log(tempStudents);
-
-  //   return tempStudents;
-  // }
-
-  getStudient(id: number) {
-    const student = this.students.find((student) => student.id === id);
-    return student;
-    // if (student) {
-    //   return student;
-    // }
+  getStudients(): Observable<StudentModel[]> {
+    return this.http.get<any>(this.studentUrl);
   }
 
   addStudient(name: string) {
-    if (name) {
-      const student = new StudentModel(Date.now(), name);
-      this.students.push(student);
-    }
+    const body = JSON.stringify({ name });
+    return this.http.post<any>(this.studentUrl, body, httpOptions);
   }
 
-  removeStudent(id: number) {
-    const studientIndex = this.students.findIndex(
-      (studient) => studient.id === id
-    );
-    console.log(studientIndex);
-
-    if (studientIndex !== -1) {
-      this.students.splice(studientIndex, 1);
-    }
+  getStudient(id: number): Observable<any> {
+    const url = `${this.studentUrl}/${id}`;
+    return this.http.get<any>(url, httpOptions);
   }
 
-  updateStudent(id: number, name: string) {
-    console.log('studient changed: ', id, name);
-    const studient = this.students.find((studient) => studient.id === id);
-    console.log(studient);
+  removeStudent(id: number): Observable<any> {
+    const url = `${this.studentUrl}/${id}`;
 
-    if (studient && name) {
-      studient.name = name;
-      console.log(studient);
-    }
+    return this.http.delete<any>(url);
   }
 
-  attachClasse(id: number, classe: string) {
-    const studient = this.students.find((studient) => studient.id === id);
-    if (studient) {
-      studient.currentClasse = classe;
-    }
+  updateStudent(id: number, name: string): Observable<any> {
+    const body = JSON.stringify({ name });
+    console.log(body);
+    const url = `${this.studentUrl}/${id}`;
+    return this.http.patch<any>(url, body, httpOptions);
   }
 
-  detachClasse(id: number) {
-    const studient = this.students.find((studient) => studient.id === id);
-    if (studient) {
-      studient.currentClasse = null;
-    }
+  //
+
+  attachClasse(id: string, classe: string): Observable<any> {
+    console.log(id);
+    const body = JSON.stringify({ currentClasse: classe });
+    console.log(body);
+
+    const url = `${this.studentUrl}/join/${id}`;
+    console.log(url);
+
+    return this.http.post<any>(url, body, httpOptions);
+  }
+
+  detachClasse(id: number): Observable<any> {
+    const url = `${this.studentUrl}/detach/${id}`;
+    return this.http.get<any>(url, httpOptions);
   }
 
   updateInput = new EventEmitter<number>();
-
-  constructor() {}
 }
-
-// const students = [];
-// const classes = [];
-// let currentClasse = null;
-
-// function addStudent(name) {
-//   students.push({ name, id: Date.now(), currentClasse: null });
-// }
-
-// function removeStudent(id) {
-//   students.filter((student) => {
-//     return student.id === id;
-//   });
-// }
-
-// function attachClasse(classe, studentId) {
-//   const index = students.findIndex((student) => student.id === studentId);
-//   students[index].classe = classe;
-// }
-
-// function detachClasse(studentId) {
-//   const index = students.findIndex((student) => student.id === studentId);
-//   students[index].classe = null;
-// }
-
-// function filter(classe) {
-//   return students.filter((student) => student.classe === classe);
-// }

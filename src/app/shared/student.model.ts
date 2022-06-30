@@ -1,6 +1,6 @@
 export class StudentModel {
   constructor(
-    public id: number,
+    public _id: number,
     public name: string,
     public currentClasse: null | string = null
   ) {}

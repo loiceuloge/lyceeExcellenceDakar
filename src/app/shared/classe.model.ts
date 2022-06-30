@@ -1,3 +1,3 @@
 export class ClasseModel {
-  constructor(public id: number, public name: string) {}
+  constructor(public _id: number, public name: string) {}
 }
